@@ -10,7 +10,7 @@ $RepoRoot = (Resolve-Path $PSScriptRoot\..\..).Path
 $Global:CurrentSharePointStubModule = $SharePointCmdletModule 
 
 $ModuleName = "MSFT_xSPWebAppGeneralSettings"
-Import-Module (Join-Path $RepoRoot "Modules\xSharePoint\DSCResources\$ModuleName\$ModuleName.psm1")
+Import-Module (Join-Path $RepoRoot "Modules\xSharePoint\DSCResources\$ModuleName\$ModuleName.psm1") -force
 
 
 Describe "xSPWebAppGeneralSettings" {
@@ -25,6 +25,8 @@ Describe "xSPWebAppGeneralSettings" {
             BlogAPIAuthenticated = $true
             BrowserFileHandling = "Permissive"
             SecurityValidation = $true
+            SecurityValidationExpires = $true
+            SecurityValidationTimeoutMinutes = 10
             RecycleBinEnabled = $true
             RecycleBinCleanupEnabled = $true
             RecycleBinRetentionPeriod = 30
@@ -73,6 +75,8 @@ Describe "xSPWebAppGeneralSettings" {
                     BrowserFileHandling = $testParams.BrowserFileHandling
                     FormDigestSettings = @{
                         Enabled = $testParams.SecurityValidation
+                        Expires = $testParams.SecurityValidationExpires
+                        Timeout = (new-timespan -minutes $testParams.SecurityValidationTimeoutMinutes)
                     }
                     RecycleBinEnabled = $testParams.RecycleBinEnabled
                     RecycleBinCleanupEnabled = $testParams.RecycleBinCleanupEnabled
