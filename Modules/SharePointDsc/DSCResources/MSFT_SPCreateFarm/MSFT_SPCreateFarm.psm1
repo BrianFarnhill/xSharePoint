@@ -90,22 +90,23 @@ function Get-TargetResource
             $serverIsJoined = $false
         } 
 
+        Test-SPDscSqlAccess -SqlServer $params.DatabaseServer
+
         try 
         {
-            Test-SPDscSqlAccess -SqlServer $params.DatabaseServer
             $spFarm = Get-SPFarm
         } 
         catch 
         {
             Write-Verbose -Message "Unable to detect local farm."
-            if ($serverIsJoined)
-            {
-                throw 'Server already joined to farm but SPFarm not reachable'
-            }
         }
         
         if ($null -eq $spFarm) 
         {
+            if ($serverIsJoined)
+            {
+                throw 'Server already joined to farm but SPFarm not reachable'
+            }
             return $null
         }
 
@@ -127,14 +128,14 @@ function Get-TargetResource
         }
 
         $returnValue = @{
-            FarmConfigDatabaseName = $spFarm.Name
-            DatabaseServer = $configDb.Server.Name
-            FarmAccount = $farmAccount
-            InstallAccount = $params.InstallAccount
-            Passphrase = $params.Passphrase.password 
-            AdminContentDatabaseName = $centralAdminSite.ContentDatabases[0].Name
-            CentralAdministrationPort = (New-Object -TypeName System.Uri $centralAdminSite.Url).Port
-            CentralAdministrationAuth = $params.CentralAdministrationAuth
+            FarmConfigDatabaseName      = $spFarm.Name
+            DatabaseServer              = $configDb.Server.Name
+            FarmAccount                 = $farmAccount
+            InstallAccount              = $params.InstallAccount
+            Passphrase                  = $params.Passphrase.password 
+            AdminContentDatabaseName    = $centralAdminSite.ContentDatabases[0].Name
+            CentralAdministrationPort   = (New-Object -TypeName System.Uri $centralAdminSite.Url).Port
+            CentralAdministrationAuth   = $params.CentralAdministrationAuth
         }
         return $returnValue
     }
