@@ -22,7 +22,12 @@
 * Improved runtime of SPSearchTopology by streamlining wait processes
 * Fixed bug with SPSearchServiceApp that would throw an error about SDDL string
 * Improved output of test results for AppVeyor and VS Code based test runs
+<<<<<<< HEAD
 * Fixed issue with SPWebAppPolicy if OS language is not En-Us
+=======
+* Updated resource SPTrustedIdentityTokenIssuer to give possibility to load 
+  signing certificate from file system
+>>>>>>> Updated tests and syntax
 
 ## 1.5
 

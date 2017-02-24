@@ -265,12 +265,12 @@ Describe -Name $Global:SPDscHelper.DescribeHeader -Fixture {
                 }
             }
 
-            It "validation of IdentifierClaim fails in the set method" {
+            It "should fail validation of IdentifierClaim in the set method" {
                 { Set-TargetResource @testParams } | Should Throw "IdentifierClaim does not match any claim type specified in ClaimsMappings."
             }
         }
 
-        Context -Name "The certificate thumbprint does not match a certificate in certificate store LocalMachine\My" -Fixture {
+        Context -Name "The signing certificate is in certificate store LocalMachine\My" -Fixture {
             $testParams = @{
                 Name                         = "Contoso"
                 Description                  = "Contoso"
