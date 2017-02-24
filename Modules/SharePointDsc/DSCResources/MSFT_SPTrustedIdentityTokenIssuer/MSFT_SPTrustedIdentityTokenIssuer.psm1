@@ -195,7 +195,7 @@ function Set-TargetResource
                     Write-Verbose -Message "Parameter 'SigningCertificateThumbprintOrFilePath' does not match a thumbprint, getting certificate from file system path '$($params.SigningCertificateThumbprintOrFilePath)'"
                     try
                     {
-                        $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($params.SigningCertificateThumbprintOrFilePath)
+                        $cert = New-Object -TypeName "System.Security.Cryptography.X509Certificates.X509Certificate2" -ArgumentList @($params.SigningCertificateThumbprintOrFilePath)
                     }
                     catch
                     {
